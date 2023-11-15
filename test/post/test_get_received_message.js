@@ -131,6 +131,26 @@ const tests = [
         messages: [
           {
             type: '34349334',
+            value: Buffer.from('message thisisspam.com').toString('hex'),
+          },
+          {
+            type: '34349337',
+            value: Buffer.alloc(1).toString('hex'),
+          },
+        ],
+      }],
+    }),
+    description: 'Got received message with a from key which contains spam',
+    expected: {
+      message: 'Received 0\\.00000001 for “description” via x \\- Sender message: “message **SPAM**”',
+    },
+  },
+  {
+    args: makeArgs({
+      payments: [{
+        messages: [
+          {
+            type: '34349334',
             value: Buffer.from('message').toString('hex'),
           },
           {

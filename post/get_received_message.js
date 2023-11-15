@@ -189,15 +189,14 @@ module.exports = ({description, lnd, payments, received, via}, cbk) => {
 
         const senderMsg = bufFromHex(messageDetails.message.value).toString();
 
-        const domainRegex = /(?!:\/\/)(?=[a-zA-Z0-9-]{1,63}\.?)(xn--)?[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})+/gm;
+        const domainRegex = /(?!:\/\/)(?=[a-zA-Z0-9-]{1,63}(\.)?)(xn--)?[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*((\.|\\\\.?)[a-zA-Z]{2,})+/gm;
 
         if ((m = domainRegex.exec(senderMsg)) !== null) {
           // 1. Return early, replace with *spam*, or discard entirely?
           // 1. return cbk(null, receiveLine);
-
           // 2.
-          senderMsg.replace(domainRegex, `**SPAM**`);
-        }
+          senderMsg = senderMsg.replace(domainRegex, `**SPAM**`);
+        } 
 
         const senderLine = `Sender message: “${senderMsg}”`;
 
